@@ -10,7 +10,8 @@ import { User } from "../../models/user";
 export class RegisterFormComponent {
     user = new User();
 
-    onSubmit () {
+    onSubmit (form) {
+        console.log(form);
         console.log(this.user);
     }
 }
