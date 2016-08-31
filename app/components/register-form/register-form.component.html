@@ -1,14 +1,14 @@
 <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <label>Username</label>
-        <input class="form-control" formControlName="username" type="text" required>
+        <input class="form-control" formControlName="username" type="text">
         <div *ngIf="!formGroup.controls.username.valid && formGroup.controls.username.dirty">
             <div class="error" *ngIf="formGroup.controls.username.errors.required">Username is required.</div>
         </div>
     </div>
     <div class="form-group">
         <label>Password</label>
-        <input class="form-control" type="password" formControlName="password" required minlength="5">
+        <input class="form-control" type="password" formControlName="password">
         <div *ngIf="!formGroup.controls.password.valid && formGroup.controls.password.dirty">
             <div class="error" *ngIf="formGroup.controls.password.errors.required">Password is required.</div>
             <div class="error" *ngIf="formGroup.controls.password.errors.minlength">Password must be at least 5 characters length.</div>
@@ -16,8 +16,7 @@
     </div>
     <div class="form-group">
         <label>Password again</label>
-        <input class="form-control" type="password" required formControlName="passwordConfirm"
-               [a2cPasswordMatch]="formGroup.controls.password.value" [control]="formGroup.controls.passwordConfirm">
+        <input class="form-control" type="password" formControlName="passwordConfirm">
         <div *ngIf="!formGroup.controls.passwordConfirm.valid && formGroup.controls.passwordConfirm.dirty">
             <div class="error" *ngIf="formGroup.controls.passwordConfirm.errors.required">Password confirmation is required.</div>
             <div class="error" *ngIf="formGroup.controls.passwordConfirm.errors.passwordMatch">Password mismatch.</div>
@@ -25,7 +24,7 @@
     </div>
     <div class="form-group">
         <label>Bio</label>
-        <textarea class="form-control" rows="2" formControlName="bio" required></textarea>
+        <textarea class="form-control" rows="2" formControlName="bio"></textarea>
         <div *ngIf="!formGroup.controls.bio.valid && formGroup.controls.bio.dirty">
             <div class="error" *ngIf="formGroup.controls.bio.errors.required">Bio is required.</div>
         </div>
