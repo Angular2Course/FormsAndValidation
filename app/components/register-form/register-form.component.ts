@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators, MinLengthValidator } from "@angular/forms";
 import { PasswordMatchValidator } from "../../validators/password-match.validator";
+import { UniqueUsernameValidator } from "../../validators/unique-username.validator";
+import { UsernameService } from "../../service/username.service";
 
 @Component({
     moduleId: module.id,
@@ -11,10 +13,10 @@ import { PasswordMatchValidator } from "../../validators/password-match.validato
 export class RegisterFormComponent {
     formGroup: FormGroup;
 
-    constructor (builder: FormBuilder) {
+    constructor (builder: FormBuilder, usernameService: UsernameService) {
         let passwordValidator = new PasswordMatchValidator();
         this.formGroup = builder.group({
-            username: ['', Validators.required],
+            username: ['', [Validators.required], [new UniqueUsernameValidator(usernameService)]],
             password: ['', [Validators.required, new MinLengthValidator('5')]],
             passwordConfirm: ['', [Validators.required, passwordValidator]],
             bio: ['', Validators.required]
