@@ -1,19 +1,33 @@
 <form #form="ngForm">
     <div class="form-group">
         <label>Username</label>
-        <input class="form-control" [(ngModel)]="user.username" name="username" type="text" required>
+        <input class="form-control" [(ngModel)]="user.username" name="username" type="text" required #username="ngModel">
+        <div *ngIf="!username.valid && username.dirty">
+            <div *ngIf="username.errors.required">Username is required.</div>
+        </div>
     </div>
     <div class="form-group">
         <label>Password</label>
-        <input class="form-control" type="password" [(ngModel)]="user.password" name="password" required minlength="5">
+        <input class="form-control" type="password" [(ngModel)]="user.password" name="password" required minlength="5" #password="ngModel">
+        <div *ngIf="!password.valid && password.dirty">
+            <div *ngIf="password.errors.required">Password is required.</div>
+            <div *ngIf="password.errors.minlength">Password must be at least 5 characters.</div>
+        </div>
     </div>
     <div class="form-group">
         <label>Password again</label>
-        <input class="form-control" type="password" [(ngModel)]="passwordInput.value" name="passwordConfirm" #passwordInput required>
+        <input class="form-control" type="password" [(ngModel)]="passwordConfirmInput.value"
+               name="passwordConfirm" #passwordConfirmInput required #passwordConfirm="ngModel">
+        <div *ngIf="!passwordConfirm.valid && passwordConfirm.dirty">
+            <div *ngIf="passwordConfirm.required">Password confirmation is required.</div>
+        </div>
     </div>
     <div class="form-group">
         <label>Bio</label>
-        <textarea class="form-control" rows="2" [(ngModel)]="user.bio" name="bio" required></textarea>
+        <textarea class="form-control" rows="2" [(ngModel)]="user.bio" name="bio" required #bio="ngModel"></textarea>
+        <div *ngIf="!bio.valid">
+            <div *ngIf="bio.errors.required">Bio is required.</div>
+        </div>
     </div>
     <button class="btn-default btn" [disabled]="!form.valid">Submit</button>
 </form>
