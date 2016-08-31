@@ -1,32 +1,21 @@
-import { PasswordMatchValidator } from "../validators/password-match.validator";
 import { Input, Directive, OnInit, OnChanges, SimpleChanges, AfterViewInit, ElementRef, AfterViewChecked } from "@angular/core";
 import { NG_VALIDATORS, Validator, AbstractControl, FormControl, NgForm } from "@angular/forms";
 
 @Directive({
-    selector: '[a2cPasswordMatch]',
+    selector: '[a2cPasswordMatch][ngModel],[a2cPasswordMatch][formControl],[a2cPasswordMatch][formControlName]',
     providers: [{provide: NG_VALIDATORS, useExisting: PasswordMatchDirective, multi: true}]
 })
-export class PasswordMatchDirective implements Validator, AfterViewChecked {
-    @Input('a2cPasswordMatch') passwordToMatchControlName: string;
-    validator: PasswordMatchValidator;
-
-    constructor (
-        private form: NgForm,
-        private element: ElementRef
-    ) {}
-
-    ngAfterViewChecked ():void {
-        if(this.validator){return;}
-        let control = this.form.form.get(this.element.nativeElement.name);
-        let controlToMatch = (this.form.form.get(this.passwordToMatchControlName) as FormControl);
-        if(control && controlToMatch){
-            this.validator = new PasswordMatchValidator(control, controlToMatch);
-            control.updateValueAndValidity();
-        }
-    }
+export class PasswordMatchDirective implements Validator, OnChanges{
+    @Input('a2cPasswordMatch') passwordToMatch: string;
+    @Input() control: AbstractControl;
 
     validate (control: AbstractControl):{} {
-        return this.validator ? this.validator.validate(control) : null;
+        return control.value === this.passwordToMatch ? null : {'passwordMatch': true};
     }
 
+    ngOnChanges (changes: SimpleChanges): void {
+        if(this.control){
+            this.control.updateValueAndValidity()
+        }
+    }
 }
