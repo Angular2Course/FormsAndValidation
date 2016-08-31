@@ -1,4 +1,4 @@
-<form #form="ngForm">
+<form #form="ngForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
         <label>Username</label>
         <input class="form-control" [(ngModel)]="user.username" name="username" type="text" required #username="ngModel">
@@ -29,5 +29,5 @@
             <div class="error" *ngIf="bio.errors.required">Bio is required.</div>
         </div>
     </div>
-    <button class="btn-default btn" [disabled]="!form.valid">Submit</button>
+    <button type="submit" class="btn-default btn" [disabled]="!form.valid">Submit</button>
 </form>
